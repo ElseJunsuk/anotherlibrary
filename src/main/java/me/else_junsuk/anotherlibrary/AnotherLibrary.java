@@ -2,6 +2,9 @@ package me.else_junsuk.anotherlibrary;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * @since 0.1.0
+ */
 public final class AnotherLibrary {
 
     private final JavaPlugin plugin;
