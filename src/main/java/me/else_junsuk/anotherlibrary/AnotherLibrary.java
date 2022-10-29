@@ -2,16 +2,21 @@ package me.else_junsuk.anotherlibrary;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class AnotherLibrary extends JavaPlugin {
+public final class AnotherLibrary {
 
-    @Override
-    public void onEnable() {
-        // Plugin startup logic
+    private final JavaPlugin plugin;
 
+    /**
+     * 해당 라이브러리의 소스를 사용하려면 반드시
+     * 메인 클래스가 필요합니다.
+     * @param plugin
+     */
+    public AnotherLibrary(JavaPlugin plugin) {
+        this.plugin = plugin;
     }
 
-    @Override
-    public void onDisable() {
-        // Plugin shutdown logic
+    public JavaPlugin getPlugin() {
+        return plugin;
     }
+
 }
