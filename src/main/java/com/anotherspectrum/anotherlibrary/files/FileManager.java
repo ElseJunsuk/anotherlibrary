@@ -1,11 +1,10 @@
-package me.else_junsuk.anotherlibrary.files;
+package com.anotherspectrum.anotherlibrary.files;
 
-import me.else_junsuk.anotherlibrary.AnotherLibrary;
+import com.anotherspectrum.anotherlibrary.AnotherLibrary;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import org.jetbrains.annotations.Nullable;

@@ -93,7 +93,7 @@
             <url>http://localhost:8081/repository/maven-public/</url>
         </repository>
         <repository>
-            <id>papermc-repo</id>
+            <id>papermc</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
         <repository>

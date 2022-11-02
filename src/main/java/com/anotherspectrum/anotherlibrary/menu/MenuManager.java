@@ -1,6 +1,6 @@
-package me.else_junsuk.anotherlibrary.menu;
+package com.anotherspectrum.anotherlibrary.menu;
 
-import me.else_junsuk.anotherlibrary.utils.StringUtil;
+import com.anotherspectrum.anotherlibrary.utils.StringUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;

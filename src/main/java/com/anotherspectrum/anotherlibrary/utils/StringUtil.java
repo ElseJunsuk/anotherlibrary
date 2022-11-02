@@ -1,4 +1,4 @@
-package me.else_junsuk.anotherlibrary.utils;
+package com.anotherspectrum.anotherlibrary.utils;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;

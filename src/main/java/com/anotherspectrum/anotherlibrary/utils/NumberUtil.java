@@ -1,4 +1,4 @@
-package me.else_junsuk.anotherlibrary.utils;
+package com.anotherspectrum.anotherlibrary.utils;
 
 /**
  * 숫자를 간편하게 반올림, 반내림하거나

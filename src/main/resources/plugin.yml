@@ -1,5 +1,5 @@
 name: AnotherLibrary
 version: '${project.version}'
-main: me.else_junsuk.anotherlibrary.AnotherLibrary
+main: com.anotherspectrum.anotherlibrary.AnotherLibrary
 api-version: 1.19
 authors: [ Else_JunSuk ]
