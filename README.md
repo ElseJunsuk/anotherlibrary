@@ -2,6 +2,14 @@
 # AnotherLibrary
 Another space network's Bukkit plugin library.
 
+## Add sonatype repository
+```xml
+    <repository>
+        <id>sonatype</id>
+        <url>https://s01.oss.sonatype.org/content/groups/public/</url>
+    </repository>
+```
+
 ## Add Maven dependency
 ```xml
     <dependency>
