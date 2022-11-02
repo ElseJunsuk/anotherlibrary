@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.anotherspetrum</groupId>
+    <groupId>com.anotherspectrum</groupId>
     <artifactId>AnotherLibrary</artifactId>
-    <version>0.1.1</version>
+    <version>0.1.2</version>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
@@ -36,11 +36,11 @@
 
     <distributionManagement>
         <repository>
-            <id>releases</id>
+            <id>Releases</id>
             <url>http://localhost:8081/repository/maven-releases/</url>
         </repository>
         <snapshotRepository>
-            <id>snapshots</id>
+            <id>Snapshots</id>
             <url>http://localhost:8081/repository/maven-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
@@ -86,20 +86,12 @@
         </resources>
     </build>
 
-    <pluginRepositories>
-        <pluginRepository>
-            <releases>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <id>central</id>
-            <url>http://localhost:8081/repository/maven-central/</url>
-        </pluginRepository>
-    </pluginRepositories>
 
     <repositories>
+        <repository>
+            <id>nexus</id>
+            <url>http://localhost:8081/repository/maven-public/</url>
+        </repository>
         <repository>
             <id>papermc-repo</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
@@ -107,16 +99,6 @@
         <repository>
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
-        </repository>
-        <repository>
-            <id>public</id>
-            <url>http://localhost:8081/repository/maven-public/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
         </repository>
     </repositories>
 
