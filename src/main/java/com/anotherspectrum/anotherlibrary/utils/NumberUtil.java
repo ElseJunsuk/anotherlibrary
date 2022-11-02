@@ -5,8 +5,20 @@ package com.anotherspectrum.anotherlibrary.utils;
  * 어려운 연산을 처리할 때 편리합니다.
  *
  * @since 0.1.0
+ * @update 0.2.4/03-11-22
  */
 public class NumberUtil {
+
+    /**
+     * 값을 소수점의 특정한 자릿수까지 반올림합니다.
+     * @example 100 으로 설정 시 소수점의 둘째 자리까지 반올림합니다.
+     * @param point
+     * @param value
+     * @return
+     */
+    public static double roundDouble(int point, double value) {
+        return Math.round(value * point) / (double) point;
+    }
 
     /**
      * 값을 소숫점 둘째 자리까지 반올림하여 반환합니다.
