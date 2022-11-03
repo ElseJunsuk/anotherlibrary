@@ -21,7 +21,7 @@ public final class AnotherLibrary {
      * 메인 클래스가 필요합니다.
      * @param plugin
      */
-    public AnotherLibrary(@NotNull String pluginName, @NotNull JavaPlugin plugin) {
+    public @NotNull AnotherLibrary(@NotNull String pluginName, @NotNull JavaPlugin plugin) {
         Preconditions.checkNotNull(pluginName);
         Preconditions.checkNotNull(plugin);
 
