@@ -5,6 +5,8 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Locale;
+
 /**
  * @since 0.1.0
  * @update 0.1.2/02-11-22
@@ -27,7 +29,7 @@ public final class AnotherLibrary {
 
         this.plugin = plugin;
         this.pluginName = pluginName;
-        this.key = NamespacedKey.minecraft(pluginName);
+        this.key = NamespacedKey.minecraft(pluginName.toLowerCase(Locale.ROOT));
     }
 
     public JavaPlugin getPlugin() {
