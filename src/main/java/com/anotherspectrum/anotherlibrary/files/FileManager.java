@@ -1,6 +1,7 @@
 package com.anotherspectrum.anotherlibrary.files;
 
 import com.anotherspectrum.anotherlibrary.AnotherLibrary;
+import com.google.common.base.Preconditions;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -42,6 +43,8 @@ public class FileManager {
      * @param defaultDraw 파일 생성 후 기본적으로 어떤 데이터 섹션을 기입할지 세팅합니다.
      */
     public FileManager(@Nullable String folderPath, @NotNull String fileName, @Nullable DefaultDraw defaultDraw) {
+        Preconditions.checkNotNull(AnotherLibrary.getPluginName(), "[AnotherLibrary] 라이브러리가 당신의 플러그인 속 메인 클래스에 인스턴스 선언되지 않았습니다.\n" +
+                "따라서 디렉토리와 하위 파일이 정상적으로 세팅되지 않았습니다.");
         if (folderPath == null) {
             File folder = new File(Bukkit.getPluginsFolder().getAbsolutePath() + "/" + AnotherLibrary.getPluginName());
             if (!folder.exists()) folder.mkdirs();
