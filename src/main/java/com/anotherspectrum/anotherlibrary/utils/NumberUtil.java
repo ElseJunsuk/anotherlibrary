@@ -1,5 +1,7 @@
 package com.anotherspectrum.anotherlibrary.utils;
 
+import java.util.Random;
+
 /**
  * 숫자를 간편하게 반올림, 반내림하거나
  * 어려운 연산을 처리할 때 편리합니다.
@@ -46,6 +48,21 @@ public class NumberUtil {
      */
     public static double randomDouble(double minValue, double maxValue) {
         return round2PDouble(((Math.random() * (maxValue - minValue)) + minValue));
+    }
+
+    public static double randomDouble(double minValue, double maxValue, int point) {
+        return roundDouble(point, (Math.random() * (maxValue - minValue)) + minValue);
+    }
+
+    /**
+     * minValue부터 maxValue사이의 정수 형태의 난수를 생성합니다.
+     * @param minValue
+     * @param maxValue
+     * @return int
+     */
+    public static int randomInt(int minValue, int maxValue) {
+        Random rand = new Random();
+        return rand.nextInt((maxValue - minValue) + 1) + minValue;
     }
 
 }

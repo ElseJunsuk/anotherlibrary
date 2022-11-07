@@ -32,6 +32,7 @@ public class StringUtil {
 
     /**
      * 타이틀을 미니메시지로 간편하게 제작할 수 있습니다.
+     *
      * @param title
      * @param subtitle
      * @param fadeIn
@@ -48,9 +49,10 @@ public class StringUtil {
      * {@link String} 클래스 속 replace 메소드는
      * 메모리를 많이 잡아먹습니다.
      * 이를 해결하기 위한 메소드입니다.
-     * @param source - 리플레이스 할 메시지 (베이스)
-     * @param os - 이전 문자열
-     * @param ns - 바꿀 문자열
+     *
+     * @param source 리플레이스 할 메시지 (베이스)
+     * @param os     이전 문자열
+     * @param ns     바꿀 문자열
      * @return {@link String}
      */
     public static String replace(String source, String os, String ns) {
@@ -96,19 +98,20 @@ public class StringUtil {
     }
 
     /**
-     * 현재 테스트중인 메소드입니다.
-     * @param source
-     * @param os
-     * @param ns
-     * @return
+     * {@link TextComponent#content()} 에 포함된 모든 os 를
+     * ns 로 replace 합니다.
+     *
+     * @param source 리플레이스 대상 Component
+     * @param os     이전 Content 키워드
+     * @param ns     바꿀 Content 키워드
+     * @return {@link Component}
      */
-    @TestOnly
-    @Deprecated
     public static Component replace(TextComponent source, String os, String ns) {
         if (source == null) return null;
+        String content = source.content();
         int i = 0;
-        if ((i = source.content().indexOf(os, i)) >= 0) {
-            char[] sourceArray = source.content().toCharArray();
+        if ((i = content.indexOf(os, i)) >= 0) {
+            char[] sourceArray = content.toCharArray();
             char[] nsArray = ns.toCharArray();
             int oLength = os.length();
             StringBuilder buf = new StringBuilder(sourceArray.length);
@@ -116,7 +119,7 @@ public class StringUtil {
             i += oLength;
             int j = i;
             // oldString 을 newString 으로 대치합니다.
-            while ((i = source.content().indexOf(os, i)) > 0) {
+            while ((i = content.indexOf(os, i)) > 0) {
                 buf.append (sourceArray, j, i - j).append(nsArray);
                 i += oLength;
                 j = i;
@@ -127,11 +130,29 @@ public class StringUtil {
         }
         return source;
     }
+    public static Component replace(TextComponent source, String os1, String ns1, String os2, String ns2) {
+        return replace((TextComponent) replace(source, os1, ns1), os2, ns2);
+    }
+    public static Component replace(TextComponent source, String os1, String ns1, String os2, String ns2, String os3, String ns3) {
+        return replace((TextComponent) replace((TextComponent) replace(source, os1, ns1), os2, ns2), os3, ns3);
+    }
+    public static Component replace(TextComponent source, String os1, String ns1, String os2, String ns2, String os3, String ns3, String os4, String ns4) {
+        return replace((TextComponent) replace((TextComponent) replace((TextComponent) replace(source, os1, ns1), os2, ns2), os3, ns3), os4, ns4);
+    }
+    public static Component replace(TextComponent source, String os1, String ns1, String os2, String ns2, String os3, String ns3, String os4, String ns4, String os5, String ns5) {
+        return replace((TextComponent) replace((TextComponent) replace((TextComponent) replace((TextComponent) replace(source, os1, ns1), os2, ns2), os3, ns3), os4, ns4), os5, ns5);
+    }
+    public static Component replace(TextComponent source, String os1, String ns1, String os2, String ns2, String os3, String ns3, String os4, String ns4, String os5, String ns5, String os6, String ns6) {
+        return replace((TextComponent) replace((TextComponent) replace((TextComponent) replace((TextComponent) replace((TextComponent) replace(source, os1, ns1), os2, ns2), os3, ns3), os4, ns4), os5, ns5), os6, ns6);
+    }
+    public static Component replace(TextComponent source, String os1, String ns1, String os2, String ns2, String os3, String ns3, String os4, String ns4, String os5, String ns5, String os6, String ns6, String os7, String ns7) {
+        return replace((TextComponent) replace((TextComponent) replace((TextComponent) replace((TextComponent) replace((TextComponent) replace((TextComponent) replace(source, os1, ns1), os2, ns2), os3, ns3), os4, ns4), os5, ns5), os6, ns6), os7, ns7);
+    }
 
     /**
      * 엘립시스 문자열을 읽고 리스트 Component 형태로 반환합니다.
      * 아이템에 lore 를 제작하거나, 무언가의 설명글을 추가할 떄 편리합니다.
-     * @param messages - "", "", "", ...
+     * @param messages "", "", "", ...
      * @return {@link List<Component>}
      */
     public static List<Component> ellipsis(String... messages) {
