@@ -1,5 +1,6 @@
 package com.anotherspectrum.anotherlibrary;
 
+import com.anotherspectrum.anotherlibrary.menu.InventoryListeners;
 import com.google.common.base.Preconditions;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -9,7 +10,7 @@ import java.util.Locale;
 
 /**
  * @since 0.1.0
- * @update 0.1.2/02-11-22
+ * @update 0.2.6-SNAPSHOT/07-11-22
  * @see #getKey() add NamespacedKey
  */
 public final class AnotherLibrary {
@@ -30,6 +31,8 @@ public final class AnotherLibrary {
         this.plugin = plugin;
         this.pluginName = pluginName;
         this.key = NamespacedKey.minecraft(pluginName.toLowerCase(Locale.ROOT));
+
+        new InventoryListeners(plugin);
     }
 
     public JavaPlugin getPlugin() {
