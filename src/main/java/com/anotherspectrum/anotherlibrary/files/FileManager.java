@@ -15,6 +15,8 @@ import java.io.IOException;
 /**
  * 파일을 생성하거나, 생성한 파일을 관리할 수 있습니다.
  * @since 0.1.1
+ * @update 0.2.6-SNAPSHOT/08-11-22
+ * @see #contains(String path)
  */
 public class FileManager {
 
@@ -86,6 +88,10 @@ public class FileManager {
         void draw(FileConfiguration config);
     }
 
+    public interface ContainsDraw {
+        void draw();
+    }
+
     /**
      * 파일에 세팅된 모든 데이터를 저장합니다.
      */
@@ -113,5 +119,32 @@ public class FileManager {
      */
     public FileConfiguration getConfig() {
         return config;
+    }
+
+    /**
+     * 해당 path 가 파일 내에 기입되어 있는지
+     * 확인할 수 있습니다.
+     * 존재할 경우 true, 그렇지 않은 경우는 false 를
+     * 반환합니다.
+     * @see FileConfiguration#contains(String path)
+     * @param path 확인할 경로
+     * @return 경로 존재 여부
+     */
+    public boolean contains(String path) {
+        return config.contains(path);
+    }
+
+    /**
+     * 해당 path 가 파일 내에 기입되어 있지 않다면
+     * DefaultDraw 인터페이스를 사용하여
+     * 기본 세팅을 추가할 수 있습니다.
+     * @see #contains(String path) path 가 존재하는지 확인하려면 이 메소드를 사용하세요.
+     * @param path 해당 경로가 파일에 기입되어 있지 않다면
+     * @param containsDraw 해당 인터페이스를 실행
+     */
+    public void isNotContains(String path, ContainsDraw containsDraw) {
+        if (!contains(path)) {
+            containsDraw.draw();
+        }
     }
 }

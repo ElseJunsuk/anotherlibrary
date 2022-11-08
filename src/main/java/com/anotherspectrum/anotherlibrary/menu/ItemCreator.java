@@ -218,20 +218,42 @@ public class ItemCreator {
     }
 
     /**
+     * 아이템에 인첸트와 그 레벨을 부여합니다.
+     *
+     * @param item
+     * @param enchantment
+     * @param level
+     * @return
+     */
+    public static ItemStack addEnchant(ItemStack item, Enchantment enchantment, int level) {
+        item.addUnsafeEnchantment(enchantment, level);
+        return item;
+    }
+
+    /**
      * 해당 아이템의 모든 Flags 를 가려줍니다.
      *
+     * @see #removeFlag(ItemStack, ItemFlag...)
      * @param item 타겟 아이템
      * @return {@link ItemStack}
      */
     public static ItemStack removeFlag(ItemStack item) {
+        return removeFlag(item,
+                ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_DYE, ItemFlag.HIDE_DESTROYS,
+                ItemFlag.HIDE_PLACED_ON, ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE,
+                ItemFlag.HIDE_POTION_EFFECTS);
+    }
+
+    /**
+     * 해당 아이템의 특정한 Flags 를 가려줍니다.
+     *
+     * @param item
+     * @param flags
+     * @return
+     */
+    public static ItemStack removeFlag(ItemStack item, ItemFlag... flags) {
         ItemMeta meta = item.getItemMeta();
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        meta.addItemFlags(ItemFlag.HIDE_DYE);
-        meta.addItemFlags(ItemFlag.HIDE_DESTROYS);
-        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
-        meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        meta.addItemFlags(flags);
         item.setItemMeta(meta);
         return item;
     }
