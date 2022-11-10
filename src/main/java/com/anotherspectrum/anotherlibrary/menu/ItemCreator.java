@@ -11,6 +11,7 @@ import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -159,6 +160,133 @@ public class ItemCreator {
         item.addUnsafeEnchantment(enchantment, level);
         return item;
     }
+
+                                                    /* ANCHOR_string_creator; */
+
+    /**
+     * 해당 타입의 아이템에 이름을 부여합니다.
+     *
+     * @param material
+     * @param name     아이템 이름
+     * @return {@link ItemStack}
+     */
+    public static ItemStack create(Material material, int amount, String name) {
+        ItemStack item = create(material, amount);
+        ItemMeta meta = item.getItemMeta();
+        if (meta == null) return item;
+        meta.displayName(StringUtil.format(name));
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    /**
+     * 아이템 타입과 이름, 설명을 부여합니다.
+     *
+     * @param material
+     * @param name
+     * @param lore     아이템 설명
+     * @return {@link ItemStack}
+     */
+    public static ItemStack create(Material material, int amount, String name, List<String> lore) {
+        ItemStack item = create(material, amount, name);
+        ItemMeta meta = item.getItemMeta();
+        if (meta == null) return item;
+        List<Component> cList = new ArrayList<>();
+        for (String list : lore)
+            cList.add(StringUtil.format(list));
+        meta.lore(cList);
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    /**
+     * 아이템 타입과 이름, 설명을 부여하고
+     * 부수적으로 플래그(Flags)를 숨길 것인지
+     * 설정합니다.
+     *
+     * @param material
+     * @param name
+     * @param lore
+     * @param hideFlags 플래그 하이딩
+     * @return {@link ItemStack}
+     */
+    public static ItemStack create(Material material, int amount, String name, List<String> lore, boolean hideFlags) {
+        ItemStack item = create(material, amount, name, lore);
+        ItemMeta meta = item.getItemMeta();
+        if (meta == null) return item;
+        if (hideFlags) meta.addItemFlags(ItemFlag.values());
+        else meta.removeItemFlags(ItemFlag.values());
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    /**
+     * 아이템 타입과 이름, 설명을 부여하고
+     * 플래그를 숨길 것인지 설정한 뒤 최종적으로
+     * 아이템이 인첸트 효과를 보일 것인지 설정합니다.
+     *
+     * @param material
+     * @param name
+     * @param lore
+     * @param hideFlags
+     * @param isGlowing 아이템 인첸팅 효과
+     * @return {@link ItemStack}
+     */
+    public static ItemStack create(Material material, int amount, String name, List<String> lore, boolean hideFlags, boolean isGlowing) {
+        ItemStack item = create(material, amount, name, lore, hideFlags);
+        ItemMeta meta = item.getItemMeta();
+        if (meta == null) return item;
+        if (isGlowing) {
+            item.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        }
+        return item;
+    }
+
+    /**
+     * 아이템 타입과 이름, 설명을 부여하고
+     * 플래그와 인첸트 효과를 보일 것인지 설정하고
+     * 인첸트를 부여할 수 있습니다.
+     *
+     * @param material
+     * @param name
+     * @param lore
+     * @param hideFlags
+     * @param isGlowing
+     * @param enchantment 인첸트
+     * @return {@link ItemStack}
+     */
+    public static ItemStack create(Material material, int amount, String name, List<String> lore, boolean hideFlags, boolean isGlowing, Enchantment enchantment) {
+        ItemStack item = create(material, amount, name, lore, hideFlags, isGlowing);
+        ItemMeta meta = item.getItemMeta();
+        if (meta == null) return item;
+        item.addUnsafeEnchantment(enchantment, 1);
+        return item;
+    }
+
+    /**
+     * 아이템 타입과 이름, 설명을 부여하고
+     * 플래그와 인첸트 효과를 보일 것인지 설정하고
+     * 인첸트와 그 레벨을 부여할 수 있습니다.
+     *
+     * @param material
+     * @param name
+     * @param lore
+     * @param hideFlags
+     * @param isGlowing
+     * @param enchantment
+     * @param level       인첸트 레벨
+     * @return {@link ItemStack}
+     */
+    public static ItemStack create(Material material, int amount, String name, List<String> lore, boolean hideFlags, boolean isGlowing, Enchantment enchantment, int level) {
+        ItemStack item = create(material, amount, name, lore, hideFlags, isGlowing);
+        ItemMeta meta = item.getItemMeta();
+        if (meta == null) return item;
+        item.addUnsafeEnchantment(enchantment, level);
+        return item;
+    }
+
+    /* ANCHOR_string_creator; */
 
     /**
      * 갑옷 메타데이터를 ItemStack[] (배열)형태로 컨버팅합니다.
