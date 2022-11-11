@@ -197,18 +197,13 @@ public class MenuManager {
      * @param fillItem
      */
     public void fillBorders(ItemStack fillItem) {
-        for (int i = 0; i < rows * 9; i++) {
-            if ((i <= 8) || (i >= (rows * 9) - 9)
-                    || i == 9 || i == 18
-                    || i == 27 || i == 36
-                    || i == 17 || i == 26
-                    || i == 35 || i == 44)
-                inventory.setItem(i, fillItem);
-        }
+        this.fillRows(1, fillItem); this.fillRows(rows, fillItem);
+        this.fillColumn(1, fillItem); this.fillColumn(9, fillItem);
     }
 
     /**
      * 인벤토리 특정한 rows 를 해당 아이템으로 채웁니다.
+     * @help Gy_o, qawaea, kyominna
      * @param row
      * @param fillItem
      */
@@ -216,6 +211,18 @@ public class MenuManager {
         if ((row < rows) || row < 1) return;
         for (int i = (row - 1) * 9; i <= ((row * 9) - 1); i++)
             inventory.setItem(i, fillItem);
+    }
+
+    /**
+     * 인벤토리의 특정한 columns 를 해당 아이템으로 채웁니다.
+     * @help Gy_o, qawaea, kyominna
+     * @param column
+     * @param fillItem
+     */
+    public void fillColumn(int column, ItemStack fillItem) {
+        if (column < 1) return;
+        for (int i = (column - 1); i < (column - 1) + (rows * 9); i+=9)
+            getInventory().setItem(i, fillItem);
     }
 
 }
