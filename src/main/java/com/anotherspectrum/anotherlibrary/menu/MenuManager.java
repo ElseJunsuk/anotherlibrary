@@ -208,7 +208,7 @@ public class MenuManager {
      * @param fillItem
      */
     public void fillRows(int row, ItemStack fillItem) {
-        if ((row < rows) || row < 1) return;
+        if ((row > rows) || row < 1) return;
         for (int i = (row - 1) * 9; i <= ((row * 9) - 1); i++)
             inventory.setItem(i, fillItem);
     }
