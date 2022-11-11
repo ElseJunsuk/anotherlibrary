@@ -207,4 +207,15 @@ public class MenuManager {
         }
     }
 
+    /**
+     * 인벤토리 특정한 rows 를 해당 아이템으로 채웁니다.
+     * @param row
+     * @param fillItem
+     */
+    public void fillRows(int row, ItemStack fillItem) {
+        if ((row < rows) || row < 1) return;
+        for (int i = (row - 1) * 9; i <= ((row * 9) - 1); i++)
+            inventory.setItem(i, fillItem);
+    }
+
 }
