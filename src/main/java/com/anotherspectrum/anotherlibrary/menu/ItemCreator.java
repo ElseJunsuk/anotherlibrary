@@ -18,6 +18,7 @@ import java.util.List;
  * 아이템을 간편하게 제작할 수 있습니다.
  *
  * @since 0.1.2
+ * @update 0.2.6-SNAPSHOT/10-11-22
  */
 public class ItemCreator {
 
@@ -166,6 +167,10 @@ public class ItemCreator {
     /**
      * 해당 타입의 아이템에 이름을 부여합니다.
      *
+     * 심플하게 문자열로 아이템의 이름, 로어를 설정해주는 메소드입니다.
+     * 아이템의 Flags 를 숨기거나, 인첸트를 부여하거나, Glowing 을 추가하려면
+     * 추가 메소드를 사용하세요.
+     *
      * @param material
      * @param name     아이템 이름
      * @return {@link ItemStack}
@@ -182,12 +187,16 @@ public class ItemCreator {
     /**
      * 아이템 타입과 이름, 설명을 부여합니다.
      *
+     * 심플하게 문자열로 아이템의 이름, 로어를 설정해주는 메소드입니다.
+     * 아이템의 Flags 를 숨기거나, 인첸트를 부여하거나, Glowing 을 추가하려면
+     * 추가 메소드를 사용하세요.
+     *
      * @param material
      * @param name
      * @param lore     아이템 설명
      * @return {@link ItemStack}
      */
-    public static ItemStack create(Material material, int amount, String name, List<String> lore) {
+    public static ItemStack create(Material material, int amount, String name, String... lore) {
         ItemStack item = create(material, amount, name);
         ItemMeta meta = item.getItemMeta();
         if (meta == null) return item;
@@ -199,94 +208,7 @@ public class ItemCreator {
         return item;
     }
 
-    /**
-     * 아이템 타입과 이름, 설명을 부여하고
-     * 부수적으로 플래그(Flags)를 숨길 것인지
-     * 설정합니다.
-     *
-     * @param material
-     * @param name
-     * @param lore
-     * @param hideFlags 플래그 하이딩
-     * @return {@link ItemStack}
-     */
-    public static ItemStack create(Material material, int amount, String name, List<String> lore, boolean hideFlags) {
-        ItemStack item = create(material, amount, name, lore);
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null) return item;
-        if (hideFlags) meta.addItemFlags(ItemFlag.values());
-        else meta.removeItemFlags(ItemFlag.values());
-        item.setItemMeta(meta);
-        return item;
-    }
-
-    /**
-     * 아이템 타입과 이름, 설명을 부여하고
-     * 플래그를 숨길 것인지 설정한 뒤 최종적으로
-     * 아이템이 인첸트 효과를 보일 것인지 설정합니다.
-     *
-     * @param material
-     * @param name
-     * @param lore
-     * @param hideFlags
-     * @param isGlowing 아이템 인첸팅 효과
-     * @return {@link ItemStack}
-     */
-    public static ItemStack create(Material material, int amount, String name, List<String> lore, boolean hideFlags, boolean isGlowing) {
-        ItemStack item = create(material, amount, name, lore, hideFlags);
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null) return item;
-        if (isGlowing) {
-            item.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
-            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        }
-        return item;
-    }
-
-    /**
-     * 아이템 타입과 이름, 설명을 부여하고
-     * 플래그와 인첸트 효과를 보일 것인지 설정하고
-     * 인첸트를 부여할 수 있습니다.
-     *
-     * @param material
-     * @param name
-     * @param lore
-     * @param hideFlags
-     * @param isGlowing
-     * @param enchantment 인첸트
-     * @return {@link ItemStack}
-     */
-    public static ItemStack create(Material material, int amount, String name, List<String> lore, boolean hideFlags, boolean isGlowing, Enchantment enchantment) {
-        ItemStack item = create(material, amount, name, lore, hideFlags, isGlowing);
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null) return item;
-        item.addUnsafeEnchantment(enchantment, 1);
-        return item;
-    }
-
-    /**
-     * 아이템 타입과 이름, 설명을 부여하고
-     * 플래그와 인첸트 효과를 보일 것인지 설정하고
-     * 인첸트와 그 레벨을 부여할 수 있습니다.
-     *
-     * @param material
-     * @param name
-     * @param lore
-     * @param hideFlags
-     * @param isGlowing
-     * @param enchantment
-     * @param level       인첸트 레벨
-     * @return {@link ItemStack}
-     */
-    public static ItemStack create(Material material, int amount, String name, List<String> lore, boolean hideFlags, boolean isGlowing, Enchantment enchantment, int level) {
-        ItemStack item = create(material, amount, name, lore, hideFlags, isGlowing);
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null) return item;
-        item.addUnsafeEnchantment(enchantment, level);
-        return item;
-    }
-
-    /* ANCHOR_string_creator; */
+                                                    /* ANCHOR_string_creator; */
 
     /**
      * 갑옷 메타데이터를 ItemStack[] (배열)형태로 컨버팅합니다.

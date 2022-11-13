@@ -194,6 +194,7 @@ public class MenuManager {
     /**
      * 인벤토리의 rows 를 계산하고
      * 테두리(보더)를 해당 아이템으로 채웁니다.
+     * @help Gy_o, qawaea, kyominna
      * @param fillItem
      */
     public void fillBorders(ItemStack fillItem) {
