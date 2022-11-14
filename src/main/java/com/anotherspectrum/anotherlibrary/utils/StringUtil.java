@@ -17,6 +17,7 @@ import java.util.List;
  * 문자열을 당신의 입맛대로 꾸밀 수 있습니다.
  *
  * @since 0.1.0
+ * @update 0.2.7-SNAPSHOT/15-11-22
  */
 public class StringUtil {
 
@@ -160,6 +161,24 @@ public class StringUtil {
         for (String comps : messages)
             list.add(format(comps));
         return list;
+    }
+
+    /**
+     * {@link Component} 를 문자열로 변환합니다.
+     * @param message {@link Component}
+     * @return 문자열로 변형된 {@link Component}
+     */
+    public static String switching(Component message) {
+        return ((TextComponent) message).content().toString();
+    }
+
+    /**
+     * 문자열을 {@link Component} 로 변환합니다.
+     * @param message 문자열
+     * @return {@link Component} 로 변형된 문자열
+     */
+    public static Component switching(String message) {
+        return format(message);
     }
 
 }
