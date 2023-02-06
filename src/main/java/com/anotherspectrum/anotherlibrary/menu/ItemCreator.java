@@ -15,10 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 아이템을 간편하게 제작할 수 있습니다.
+ * 아이템 제작에 필요한 도구가 제공됩니다.
  *
- * @since 0.1.2
- * @update 0.2.6-SNAPSHOT/10-11-22
+ * @since 0.1.2 - UPDATE FOR 0.3.0
  */
 public class ItemCreator {
 
@@ -45,7 +44,7 @@ public class ItemCreator {
     /**
      * 해당 타입의 아이템에 이름을 부여합니다.
      *
-     * @param material
+     * @param material 아이템 타입
      * @param name     아이템 이름
      * @return {@link ItemStack}
      */
@@ -61,8 +60,8 @@ public class ItemCreator {
     /**
      * 아이템 타입과 이름, 설명을 부여합니다.
      *
-     * @param material
-     * @param name
+     * @param material 아이템 타입
+     * @param name     아이템 이름
      * @param lore     아이템 설명
      * @return {@link ItemStack}
      */
@@ -80,9 +79,9 @@ public class ItemCreator {
      * 부수적으로 플래그(Flags)를 숨길 것인지
      * 설정합니다.
      *
-     * @param material
-     * @param name
-     * @param lore
+     * @param material  아이템 타입
+     * @param name      아이템 이름
+     * @param lore      아이템 설명
      * @param hideFlags 플래그 하이딩
      * @return {@link ItemStack}
      */
@@ -101,10 +100,10 @@ public class ItemCreator {
      * 플래그를 숨길 것인지 설정한 뒤 최종적으로
      * 아이템이 인첸트 효과를 보일 것인지 설정합니다.
      *
-     * @param material
-     * @param name
-     * @param lore
-     * @param hideFlags
+     * @param material  아이템 타입
+     * @param name      아이템 이름
+     * @param lore      아이템 설명
+     * @param hideFlags 플래그 하이딩
      * @param isGlowing 아이템 인첸팅 효과
      * @return {@link ItemStack}
      */
@@ -124,11 +123,11 @@ public class ItemCreator {
      * 플래그와 인첸트 효과를 보일 것인지 설정하고
      * 인첸트를 부여할 수 있습니다.
      *
-     * @param material
-     * @param name
-     * @param lore
-     * @param hideFlags
-     * @param isGlowing
+     * @param material    아이템 타입
+     * @param name        아이템 이름
+     * @param lore        아이템 설명
+     * @param hideFlags   플래그 하이딩
+     * @param isGlowing   아이템 인첸팅 효과
      * @param enchantment 인첸트
      * @return {@link ItemStack}
      */
@@ -145,12 +144,12 @@ public class ItemCreator {
      * 플래그와 인첸트 효과를 보일 것인지 설정하고
      * 인첸트와 그 레벨을 부여할 수 있습니다.
      *
-     * @param material
-     * @param name
-     * @param lore
-     * @param hideFlags
-     * @param isGlowing
-     * @param enchantment
+     * @param material    아이템 타입
+     * @param name        아이템 이름
+     * @param lore        아이템 설명
+     * @param hideFlags   플래그 하이딩
+     * @param isGlowing   아이템 인첸팅 효과
+     * @param enchantment 인첸트
      * @param level       인첸트 레벨
      * @return {@link ItemStack}
      */
@@ -161,54 +160,6 @@ public class ItemCreator {
         item.addUnsafeEnchantment(enchantment, level);
         return item;
     }
-
-                                                    /* ANCHOR_string_creator; */
-
-    /**
-     * 해당 타입의 아이템에 이름을 부여합니다.
-     *
-     * 심플하게 문자열로 아이템의 이름, 로어를 설정해주는 메소드입니다.
-     * 아이템의 Flags 를 숨기거나, 인첸트를 부여하거나, Glowing 을 추가하려면
-     * 추가 메소드를 사용하세요.
-     *
-     * @param material
-     * @param name     아이템 이름
-     * @return {@link ItemStack}
-     */
-    public static ItemStack create(Material material, int amount, String name) {
-        ItemStack item = create(material, amount);
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null) return item;
-        meta.displayName(StringUtil.format(name));
-        item.setItemMeta(meta);
-        return item;
-    }
-
-    /**
-     * 아이템 타입과 이름, 설명을 부여합니다.
-     *
-     * 심플하게 문자열로 아이템의 이름, 로어를 설정해주는 메소드입니다.
-     * 아이템의 Flags 를 숨기거나, 인첸트를 부여하거나, Glowing 을 추가하려면
-     * 추가 메소드를 사용하세요.
-     *
-     * @param material
-     * @param name
-     * @param lore     아이템 설명
-     * @return {@link ItemStack}
-     */
-    public static ItemStack create(Material material, int amount, String name, String... lore) {
-        ItemStack item = create(material, amount, name);
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null) return item;
-        List<Component> cList = new ArrayList<>();
-        for (String list : lore)
-            cList.add(StringUtil.format(list));
-        meta.lore(cList);
-        item.setItemMeta(meta);
-        return item;
-    }
-
-                                                    /* ANCHOR_string_creator; */
 
     /**
      * 갑옷 메타데이터를 ItemStack[] (배열)형태로 컨버팅합니다.
@@ -273,7 +224,7 @@ public class ItemCreator {
      * @param item
      * @param enchantment
      * @param level
-     * @return
+     * @return {@link ItemStack}
      */
     public static ItemStack addEnchant(ItemStack item, Enchantment enchantment, int level) {
         item.addUnsafeEnchantment(enchantment, level);
@@ -283,9 +234,9 @@ public class ItemCreator {
     /**
      * 해당 아이템의 모든 Flags 를 가려줍니다.
      *
-     * @see #removeFlag(ItemStack, ItemFlag...)
      * @param item 타겟 아이템
      * @return {@link ItemStack}
+     * @see #removeFlag(ItemStack, ItemFlag...)
      */
     public static ItemStack removeFlag(ItemStack item) {
         return removeFlag(item,
@@ -297,9 +248,9 @@ public class ItemCreator {
     /**
      * 해당 아이템의 특정한 Flags 를 가려줍니다.
      *
-     * @param item
-     * @param flags
-     * @return
+     * @param item  타겟 아이템
+     * @param flags 해당 아이템에 추가할 {@link ItemFlag} 플래그
+     * @return {@link ItemStack}
      */
     public static ItemStack removeFlag(ItemStack item, ItemFlag... flags) {
         ItemMeta meta = item.getItemMeta();
