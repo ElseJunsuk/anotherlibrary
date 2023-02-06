@@ -9,6 +9,7 @@ public interface MenuOpenAction {
     /**
      * 인벤토리를 오픈할 때 발생하는 이벤트를 구성합니다.
      *
+     * @param player 인벤토리를 오픈한 플레이어
      * @param event {@link InventoryOpenEvent}
      */
     default void menuOpenAction(Player player, InventoryOpenEvent event) {}
