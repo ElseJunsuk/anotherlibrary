@@ -12,7 +12,6 @@ import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.awt.*;
 import java.util.Objects;
 import java.util.Optional;
 

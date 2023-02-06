@@ -22,6 +22,12 @@ public final class ConfigurationUtil {
     private final File file;
     private FileConfiguration config;
 
+    /**
+     * 구성 파일을 생성하기 위한 인스턴스입니다.
+     *
+     * @param folderPath 데스크톱 폴더 경로
+     * @param fileName   해당 폴더에 생성할 확장자명이 포함된 파일의 이름
+     */
     public ConfigurationUtil(@NotNull String folderPath, @NotNull String fileName) {
         if (folderPath.isBlank() || folderPath.isEmpty())
             throw new NullPointerException("[AnotherLibrary] File Build 중 오류가 발생했습니다. (folderPath 는 null 일 수 없습니다.)");
