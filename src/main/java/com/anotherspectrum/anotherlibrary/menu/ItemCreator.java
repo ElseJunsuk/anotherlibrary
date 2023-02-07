@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * 아이템 제작에 필요한 도구가 제공됩니다.
  *
- * @since 0.1.2 - UPDATE FOR 0.3.0
+ * @since 0.1.2 - UPDATE FOR 0.4.51
  */
 public class ItemCreator {
 
@@ -35,6 +35,7 @@ public class ItemCreator {
      * 해당 타입으로 아이템을 생성합니다.
      *
      * @param material 아이템 타입
+     * @param amount   아이템 갯수
      * @return {@link ItemStack}
      */
     public static ItemStack create(Material material, int amount) {
@@ -45,6 +46,7 @@ public class ItemCreator {
      * 해당 타입의 아이템에 이름을 부여합니다.
      *
      * @param material 아이템 타입
+     * @param amount   아이템 갯수
      * @param name     아이템 이름
      * @return {@link ItemStack}
      */
@@ -61,6 +63,7 @@ public class ItemCreator {
      * 아이템 타입과 이름, 설명을 부여합니다.
      *
      * @param material 아이템 타입
+     * @param amount   아이템 갯수
      * @param name     아이템 이름
      * @param lore     아이템 설명
      * @return {@link ItemStack}
@@ -80,6 +83,7 @@ public class ItemCreator {
      * 설정합니다.
      *
      * @param material  아이템 타입
+     * @param amount    아이템 갯수
      * @param name      아이템 이름
      * @param lore      아이템 설명
      * @param hideFlags 플래그 하이딩
@@ -101,6 +105,7 @@ public class ItemCreator {
      * 아이템이 인첸트 효과를 보일 것인지 설정합니다.
      *
      * @param material  아이템 타입
+     * @param amount    아이템 갯수
      * @param name      아이템 이름
      * @param lore      아이템 설명
      * @param hideFlags 플래그 하이딩
@@ -124,6 +129,7 @@ public class ItemCreator {
      * 인첸트를 부여할 수 있습니다.
      *
      * @param material    아이템 타입
+     * @param amount      아이템 갯수
      * @param name        아이템 이름
      * @param lore        아이템 설명
      * @param hideFlags   플래그 하이딩
@@ -145,6 +151,7 @@ public class ItemCreator {
      * 인첸트와 그 레벨을 부여할 수 있습니다.
      *
      * @param material    아이템 타입
+     * @param amount      아이템 갯수
      * @param name        아이템 이름
      * @param lore        아이템 설명
      * @param hideFlags   플래그 하이딩
@@ -257,6 +264,17 @@ public class ItemCreator {
         meta.addItemFlags(flags);
         item.setItemMeta(meta);
         return item;
+    }
+
+    /**
+     * 이름, 로어(설명)가 공백인 아이템을 반환합니다.
+     *
+     * @param material 아이템 타입
+     * @param amount   아이템 갯수
+     * @return 이름, 로어가 공백인 아이템
+     */
+    public static ItemStack empty(Material material, int amount) {
+        return ItemCreator.create(material, amount, Component.empty());
     }
 
 }
