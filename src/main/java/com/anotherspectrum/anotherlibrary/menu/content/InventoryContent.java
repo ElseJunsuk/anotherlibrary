@@ -92,13 +92,19 @@ public interface InventoryContent {
 
     class Impl implements InventoryContent {
 
-        private final int rows;
+        private int rows;
 
         private Inventory inventory;
         private Player player;
         private ClickableItem[] contents;
 
         private Pagination pagination = new Pagination.Impl();
+
+        public Impl(MenuManager menuManager, Player player) {
+            this.inventory = menuManager.getInventory();
+            this.player = player;
+            this.contents = new ClickableItem[10];
+        }
 
         public Impl(MenuManager menuManager, int rows, Player player) {
             this.inventory = menuManager.getInventory();
@@ -114,10 +120,10 @@ public interface InventoryContent {
 
         @Override
         public Optional<ClickableItem> get(int slot) {
-            if (slot < 0)
-                return Optional.empty();
-            if (slot >= rows * 9)
-                return Optional.empty();
+//            if (slot < 0)
+//                return Optional.empty();
+//            if (slot >= rows * 9)
+//                return Optional.empty();
             return Optional.ofNullable(contents[slot]);
         }
 
@@ -139,10 +145,10 @@ public interface InventoryContent {
 
         @Override
         public InventoryContent set(int slot, ClickableItem item) {
-            if (slot < 0)
-                return this;
-            if (slot >= rows * 9)
-                return this;
+//            if (slot < 0)
+//                return this;
+//            if (slot >= rows * 9)
+//                return this;
 
             contents[slot] = item;
             update(slot, item != null ? item.getItem() : null);

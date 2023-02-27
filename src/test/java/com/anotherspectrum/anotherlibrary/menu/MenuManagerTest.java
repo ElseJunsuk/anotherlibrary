@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 class MenuManagerTest extends MenuManager {
 
     public MenuManagerTest(Player player) {
-        super(player, 6, StringUtil.format("TEST"));
+        super(6, StringUtil.format("TEST"));
 
     }
 

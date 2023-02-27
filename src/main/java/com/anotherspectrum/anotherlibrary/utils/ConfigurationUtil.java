@@ -17,7 +17,7 @@ import java.util.function.Supplier;
  *
  * @since 0.2.8 - UPDATE FOR 0.3.4
  */
-public final class ConfigurationUtil {
+public final class ConfigurationUtil implements Serializable {
 
     private final File file;
     private FileConfiguration config;
@@ -162,5 +162,13 @@ public final class ConfigurationUtil {
 
         resource.close();
         outputStream.close();
+    }
+
+    @Override
+    public String toString() {
+        return "ConfigurationUtil{" +
+                "file=" + file +
+                ", config=" + config +
+                '}';
     }
 }
