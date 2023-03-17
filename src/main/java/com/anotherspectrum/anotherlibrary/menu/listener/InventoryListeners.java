@@ -39,7 +39,7 @@ public class InventoryListeners implements Listener {
         Player player = (Player) event.getWhoClicked();
         MenuManager menuManager = MenuManager.getMenu(player);
         if (menuManager != null)
-            if (menuManager.getActions().get(ActionHandler.MENU_DRAG))
+            if (menuManager.getActions().containsKey(ActionHandler.MENU_DRAG) && menuManager.getActions().get(ActionHandler.MENU_DRAG))
                 menuManager.menuDragAction(player, event);
     }
 
@@ -48,7 +48,7 @@ public class InventoryListeners implements Listener {
         Player player = (Player) event.getPlayer();
         MenuManager menuManager = MenuManager.getMenu(player);
         if (menuManager != null)
-            if (menuManager.getActions().get(ActionHandler.MENU_OPEN))
+            if (menuManager.getActions().containsKey(ActionHandler.MENU_OPEN) && menuManager.getActions().get(ActionHandler.MENU_OPEN))
                 menuManager.menuOpenAction(player, event);
     }
 
@@ -76,7 +76,7 @@ public class InventoryListeners implements Listener {
                             clickableItem.get().run(event);
                             menuManager.bottomMenuClickAction(player, event);
                         }
-                        if (menuManager.getActions().get(ActionHandler.BOTTOM_MENU_CLICK))
+                        if (menuManager.getActions().containsKey(ActionHandler.MENU_CLICK) && menuManager.getActions().get(ActionHandler.BOTTOM_MENU_CLICK))
                             menuManager.bottomMenuClickAction(player, event);
                     }
                     if (Objects.equals(event.getClickedInventory(), player.getOpenInventory().getTopInventory())) {
@@ -86,7 +86,7 @@ public class InventoryListeners implements Listener {
                             clickableItem.ifPresent(item -> item.run(event));
                             menuManager.menuNormalClickAction(player, event);
                         }
-                        if (menuManager.getActions().get(ActionHandler.MENU_CLICK))
+                        if (menuManager.getActions().containsKey(ActionHandler.MENU_CLICK) && menuManager.getActions().get(ActionHandler.MENU_CLICK))
                             menuManager.menuNormalClickAction(player, event);
                     }
                 }
@@ -98,9 +98,12 @@ public class InventoryListeners implements Listener {
     public void inventoryClose(InventoryCloseEvent event) {
         Player player = (Player) event.getPlayer();
         MenuManager menuManager = MenuManager.getMenu(player);
-        if (menuManager != null)
-            if (menuManager.getActions().get(ActionHandler.MENU_CLOSE))
+        if (menuManager != null) {
+            if (menuManager.getActions().containsKey(ActionHandler.MENU_CLOSE) && menuManager.getActions().get(ActionHandler.MENU_CLOSE)) {
                 menuManager.menuCloseAction(player, event);
+                menuManager.getActions().clear();
+            }
+        }
     }
 
 }

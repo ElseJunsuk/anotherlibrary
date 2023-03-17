@@ -222,6 +222,7 @@ public abstract class MenuManager
      */
     public void close(Player player, Player viewer) {
         player.closeInventory();
+        this.actions.clear();
         menuOpen.entrySet().removeIf(entry -> {
             if (entry.getKey().equals(viewer)) {
                 if (viewerID != null)
@@ -253,7 +254,7 @@ public abstract class MenuManager
                     if (viewerID != null)
                         removeViewer(player);
                     if (removeViewerAction != null)
-                        if (actions.get(ActionHandler.REMOVE_VIEWER))
+                        if (actions.containsKey(ActionHandler.BOTTOM_MENU_CLICK) && actions.get(ActionHandler.BOTTOM_MENU_CLICK))
                             removeViewerAction.removeViewerAction(player);
                 }
                 return true;
