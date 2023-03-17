@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -267,6 +268,20 @@ public class ItemCreator {
     }
 
     /**
+     * 해당 아이템에 특정 모델 데이터를 추가합니다.
+     *
+     * @param item  타겟 아이템
+     * @param value 설정할 모델 데이터 값
+     * @return {@link ItemStack}
+     */
+    public static ItemStack setCustomModelData(ItemStack item, int value) {
+        ItemMeta meta = item.getItemMeta();
+        meta.setCustomModelData(value);
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    /**
      * 이름, 로어(설명)가 공백인 아이템을 반환합니다.
      *
      * @param material 아이템 타입
@@ -275,6 +290,42 @@ public class ItemCreator {
      */
     public static ItemStack empty(Material material, int amount) {
         return ItemCreator.create(material, amount, Component.empty());
+    }
+
+    /**
+     * 만들어져있던 아이템의 메타 데이터를 수정합니다.
+     *
+     * @param targetItem 타겟 아이템
+     * @param amount     아이템 갯수
+     * @param name       아이템 이름
+     * @param lore       아이템 설명
+     * @param hideFlags  플래그 하이딩
+     * @param isGlowing  아이템 인첸팅 효과
+     * @return {@link ItemStack}
+     */
+    public static ItemStack editItem(@NotNull ItemStack targetItem, int amount, Component name, List<Component> lore, boolean hideFlags, boolean isGlowing) {
+        return create(targetItem.getType(), amount, name, lore, hideFlags, isGlowing);
+    }
+
+    /**
+     * 만들어져있던 아이템의 메타 데이터를 수정합니다.
+     * 모델 데이터를 추가할 수 있습니다.
+     *
+     * @param targetItem 타겟 아이템
+     * @param amount     아이템 갯수
+     * @param name       아이템 이름
+     * @param lore       아이템 설명
+     * @param hideFlags  플래그 하이딩
+     * @param isGlowing  아이템 인첸팅 효과
+     * @param modelData  모델 데이터
+     * @return {@link ItemStack}
+     */
+    public static ItemStack editItem(@NotNull ItemStack targetItem, int amount, Component name, List<Component> lore, boolean hideFlags, boolean isGlowing, int modelData) {
+        ItemStack item = editItem(targetItem, amount, name, lore, hideFlags, isGlowing);
+        ItemMeta meta = item.getItemMeta();
+        meta.setCustomModelData(modelData);
+        item.setItemMeta(meta);
+        return item;
     }
 
 }

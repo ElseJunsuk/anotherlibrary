@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.kyori.adventure.title.Title;
 
 import java.text.SimpleDateFormat;
@@ -189,17 +190,7 @@ public final class StringUtil {
      * @return 문자열로 변형된 {@link Component}
      */
     public static String switching(Component message) {
-        return ((TextComponent) message).content().toString();
-    }
-
-    /**
-     * 문자열을 {@link Component} 로 변환합니다.
-     *
-     * @param message 문자열
-     * @return {@link Component} 로 변형된 문자열
-     */
-    public static Component switching(String message) {
-        return format(message);
+        return PlainTextComponentSerializer.plainText().serialize(message);
     }
 
 }

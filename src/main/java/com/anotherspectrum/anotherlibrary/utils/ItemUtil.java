@@ -23,7 +23,7 @@ public final class ItemUtil {
         if (!item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
             return null;
         }
-        return ((TextComponent) (Objects.requireNonNull(item.getItemMeta().displayName()))).content();
+        return StringUtil.switching(item.getItemMeta().displayName());
     }
 
     /**

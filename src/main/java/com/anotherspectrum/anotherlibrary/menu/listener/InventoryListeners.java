@@ -1,5 +1,6 @@
 package com.anotherspectrum.anotherlibrary.menu.listener;
 
+import com.anotherspectrum.anotherlibrary.menu.action.ActionHandler;
 import com.anotherspectrum.anotherlibrary.menu.content.InventoryContent;
 import com.anotherspectrum.anotherlibrary.menu.item.ClickableItem;
 import com.anotherspectrum.anotherlibrary.menu.MenuManager;
@@ -36,20 +37,19 @@ public class InventoryListeners implements Listener {
     @EventHandler
     public void inventoryDrag(InventoryDragEvent event) {
         Player player = (Player) event.getWhoClicked();
-        MenuManager menu = MenuManager.getMenu(player);
-        if (menu != null) {
-            event.setCancelled(true);
-            menu.menuDragAction(player, event);
-        }
+        MenuManager menuManager = MenuManager.getMenu(player);
+        if (menuManager != null)
+            if (menuManager.getActions().get(ActionHandler.MENU_DRAG))
+                menuManager.menuDragAction(player, event);
     }
 
     @EventHandler
     public void inventoryOpen(InventoryOpenEvent event) {
         Player player = (Player) event.getPlayer();
         MenuManager menuManager = MenuManager.getMenu(player);
-        if (menuManager != null) {
-            menuManager.menuOpenAction(player, event);
-        }
+        if (menuManager != null)
+            if (menuManager.getActions().get(ActionHandler.MENU_OPEN))
+                menuManager.menuOpenAction(player, event);
     }
 
     @EventHandler
@@ -59,24 +59,35 @@ public class InventoryListeners implements Listener {
         if (menuManager != null) {
             InventoryContent content = menuManager.getInventoryContent();
             if (content != null) {
-                Inventory clickedInventory = event.getClickedInventory();
-                if (clickedInventory == player.getOpenInventory().getBottomInventory()) {
-                    if (event.getAction() == InventoryAction.COLLECT_TO_CURSOR || event.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
-                        event.setCancelled(true);
-                        return;
+                if (event.getView().title() == menuManager.getTitle()) {
+                    Inventory clickedInventory = event.getClickedInventory();
+                    if (clickedInventory == player.getOpenInventory().getBottomInventory()) {
+                        if (event.getAction() == InventoryAction.COLLECT_TO_CURSOR || event.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
+                            event.setCancelled(true);
+                            return;
+                        }
+                        if (event.getAction() == InventoryAction.NOTHING && event.getClick() != ClickType.MIDDLE) {
+                            event.setCancelled(true);
+                            return;
+                        }
+                        Optional<ClickableItem> clickableItem = content.getBottom(event.getSlot());
+                        if (clickableItem.isPresent()) {
+                            event.setCancelled(true);
+                            clickableItem.get().run(event);
+                            menuManager.bottomMenuClickAction(player, event);
+                        }
+                        if (menuManager.getActions().get(ActionHandler.BOTTOM_MENU_CLICK))
+                            menuManager.bottomMenuClickAction(player, event);
                     }
-                    if (event.getAction() == InventoryAction.NOTHING && event.getClick() != ClickType.MIDDLE) {
-                        event.setCancelled(true);
-                        return;
-                    }
-                }
-                if (Objects.equals(event.getClickedInventory(), player.getOpenInventory().getTopInventory())) {
-                    if (event.getClickedInventory() != null) {
-                        Optional<ClickableItem> clickableItem = content.get(event.getRawSlot());
-                        event.setCancelled(true);
-                        clickableItem.ifPresent(item -> item.run(event));
-
-                        menuManager.menuNormalClickAction(player, event);
+                    if (Objects.equals(event.getClickedInventory(), player.getOpenInventory().getTopInventory())) {
+                        if (event.getClickedInventory() != null) {
+                            Optional<ClickableItem> clickableItem = content.get(event.getRawSlot());
+                            event.setCancelled(true);
+                            clickableItem.ifPresent(item -> item.run(event));
+                            menuManager.menuNormalClickAction(player, event);
+                        }
+                        if (menuManager.getActions().get(ActionHandler.MENU_CLICK))
+                            menuManager.menuNormalClickAction(player, event);
                     }
                 }
             }
@@ -86,8 +97,10 @@ public class InventoryListeners implements Listener {
     @EventHandler
     public void inventoryClose(InventoryCloseEvent event) {
         Player player = (Player) event.getPlayer();
-        MenuManager menu = MenuManager.getMenu(player);
-        if (menu != null) menu.menuCloseAction(player, event);
+        MenuManager menuManager = MenuManager.getMenu(player);
+        if (menuManager != null)
+            if (menuManager.getActions().get(ActionHandler.MENU_CLOSE))
+                menuManager.menuCloseAction(player, event);
     }
 
 }

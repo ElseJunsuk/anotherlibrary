@@ -4,7 +4,6 @@ import com.anotherspectrum.anotherlibrary.menu.action.*;
 import com.anotherspectrum.anotherlibrary.menu.content.InventoryContent;
 import com.anotherspectrum.anotherlibrary.menu.item.ClickableItem;
 import lombok.Getter;
-import lombok.Setter;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -19,10 +18,10 @@ import java.util.*;
  * 해당 클래스를 사용하면 메뉴를 간편하게 제작할 수 있습니다.
  *
  * @author Else_JunSuk
- * @since 0.1.0 - UPDATE FOR 0.4.6
+ * @since 0.1.0 - UPDATE FOR 0.4.7
  */
 public abstract class MenuManager
-        implements MenuClickAction, MenuCloseAction, MenuDragAction, MenuOpenAction, Serializable {
+        implements MenuClickAction, MenuCloseAction, MenuDragAction, MenuOpenAction, BottomMenuClickAction, Serializable {
 
     private @Getter int rows;
     private @Getter
@@ -37,6 +36,8 @@ public abstract class MenuManager
 
     private static final Map<Player, MenuManager> menuOpen = new HashMap<>();
     private static final Map<String, Set<UUID>> viewers = new HashMap<>();
+    private @Getter
+    final Map<ActionHandler<?>, Boolean> actions = new HashMap<>();
 
     private final String viewerID;
     private @Getter
@@ -102,6 +103,20 @@ public abstract class MenuManager
         this.viewerID = viewerID;
         this.uuid = UUID.randomUUID();
         this.inventory = Bukkit.createInventory(null, inventoryType, title);
+    }
+
+    /**
+     * 메뉴의 특정 Action(Event)을 추가하려면 해당 메소드를 사용해야 합니다.
+     * <pre>{@code
+     * applyMenuAction(ActionType.MENU_CLICK);
+     * }</pre>
+     * 위와 같이 사용할 수 있습니다.
+     *
+     * @param action {@link ActionHandler} 액션 타입
+     * @param <T>    재네릭스 액션 타입
+     */
+    public <T> void applyMenuAction(ActionHandler<T> action) {
+        this.actions.put(action, true);
     }
 
     /**
@@ -209,7 +224,8 @@ public abstract class MenuManager
         player.closeInventory();
         menuOpen.entrySet().removeIf(entry -> {
             if (entry.getKey().equals(viewer)) {
-                if (viewerID != null) removeViewer(viewer);
+                if (viewerID != null)
+                    removeViewer(viewer);
                 return true;
             }
             return false;
@@ -234,8 +250,11 @@ public abstract class MenuManager
             if (entry.getValue().getUuid().equals(uuid)) {
                 Player player = entry.getKey();
                 if (player != null) {
-                    if (viewerID != null) removeViewer(player);
-                    if (removeViewerAction != null) removeViewerAction.removeViewerAction(player);
+                    if (viewerID != null)
+                        removeViewer(player);
+                    if (removeViewerAction != null)
+                        if (actions.get(ActionHandler.REMOVE_VIEWER))
+                            removeViewerAction.removeViewerAction(player);
                 }
                 return true;
             }

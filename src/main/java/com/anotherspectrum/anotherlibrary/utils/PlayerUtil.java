@@ -19,6 +19,7 @@ public final class PlayerUtil {
      * @param name 타겟 플레이어의 닉네임
      * @return 서버에 접속중인 name 닉네임을 가진 플레이어
      */
+    @Deprecated
     public static Player getTarget(String name) {
         Player target = Bukkit.getPlayer(name);
         if (target == null)
@@ -32,6 +33,7 @@ public final class PlayerUtil {
      * @param uuid 타겟 플레이어의 {@link UUID}
      * @return 서버에 접속중인 플레이어 중 해당 uuid 를 가진 플레이어
      */
+    @Deprecated
     public static Player getTarget(UUID uuid) {
         Player target = Bukkit.getPlayer(uuid);
         if (target == null)
@@ -45,6 +47,7 @@ public final class PlayerUtil {
      * @param name 타겟 플레이어의 닉네임
      * @return {@link OfflinePlayer}
      */
+    @Deprecated
     public static OfflinePlayer getOfflineTarget(String name) {
         return Bukkit.getOfflinePlayer(name);
     }
@@ -55,6 +58,7 @@ public final class PlayerUtil {
      * @param uuid 타겟 플레이어의 {@link UUID}
      * @return {@link OfflinePlayer}
      */
+    @Deprecated
     public static OfflinePlayer getOfflineTarget(UUID uuid) {
         return Bukkit.getOfflinePlayer(uuid);
     }

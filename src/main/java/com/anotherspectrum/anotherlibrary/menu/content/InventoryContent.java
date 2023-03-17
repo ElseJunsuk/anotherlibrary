@@ -24,12 +24,20 @@ public interface InventoryContent {
     Pagination pagination();
 
     /**
-     * 해당 슬롯에 아이템이 있으면 가져옵니다.
+     * 해당 탑 슬롯에 아이템이 있으면 가져옵니다.
      *
      * @param slot 가져올 인벤토리 슬롯
      * @return {@link ClickableItem} 클래스가 인자로 포함된 {@link Optional}
      */
     Optional<ClickableItem> get(int slot);
+
+    /**
+     * 해당 바텀 슬롯에 아이템이 있으면 가져옵니다.
+     *
+     * @param slot 가져올 인벤토리 슬롯
+     * @return {@link ClickableItem} 클래스가 인자로 포함된 {@link Optional}
+     */
+    Optional<ClickableItem> getBottom(int slot);
 
     /**
      * 컨텐츠에 추가된 모든 아이템을 반환합니다.
@@ -46,12 +54,23 @@ public interface InventoryContent {
     InventoryContent add(ClickableItem item);
 
     /**
-     * 해당 슬롯에 아이템을 놓습니다.
+     * 탑 슬롯(GUI)속 해당 슬롯에 아이템을 놓습니다.
      *
      * @param slot 아이템이 추가될 슬롯
      * @param item 추가할 {@link ClickableItem} 아이템
      */
     InventoryContent set(int slot, ClickableItem item);
+
+
+    /**
+     * 바텀 슬롯(Survivla Inv)속 해당 슬롯에 아이템을 놓습니다.
+     * 참고로, 제일 아랫 줄(핫바 슬롯)은 좌측 끝부터 '0'입니다.
+     * 그 후 '9번 슬롯'은 바텀 인벤토리 슬롯 기준 좌측 상단입니다.
+     *
+     * @param slot 아이템이 추가될 슬롯
+     * @param item 추가할 {@link ClickableItem} 아이템
+     */
+    InventoryContent setBottom(int slot, ClickableItem item);
 
     /**
      * 인벤토리의 rows 를 계산하고
@@ -97,6 +116,7 @@ public interface InventoryContent {
         private Inventory inventory;
         private Player player;
         private ClickableItem[] contents;
+        private ClickableItem[] bottomContents;
 
         private Pagination pagination = new Pagination.Impl();
 
@@ -104,6 +124,7 @@ public interface InventoryContent {
             this.inventory = menuManager.getInventory();
             this.player = player;
             this.contents = new ClickableItem[10];
+            this.bottomContents = new ClickableItem[36];
         }
 
         public Impl(MenuManager menuManager, int rows, Player player) {
@@ -111,6 +132,7 @@ public interface InventoryContent {
             this.player = player;
             this.rows = rows;
             this.contents = new ClickableItem[rows * 9];
+            this.bottomContents = new ClickableItem[36];
         }
 
         @Override
@@ -120,11 +142,12 @@ public interface InventoryContent {
 
         @Override
         public Optional<ClickableItem> get(int slot) {
-//            if (slot < 0)
-//                return Optional.empty();
-//            if (slot >= rows * 9)
-//                return Optional.empty();
             return Optional.ofNullable(contents[slot]);
+        }
+
+        @Override
+        public Optional<ClickableItem> getBottom(int slot) {
+            return Optional.ofNullable(bottomContents[slot]);
         }
 
         @Override
@@ -145,13 +168,15 @@ public interface InventoryContent {
 
         @Override
         public InventoryContent set(int slot, ClickableItem item) {
-//            if (slot < 0)
-//                return this;
-//            if (slot >= rows * 9)
-//                return this;
-
             contents[slot] = item;
             update(slot, item != null ? item.getItem() : null);
+            return this;
+        }
+
+        @Override
+        public InventoryContent setBottom(int slot, ClickableItem item) {
+            bottomContents[slot] = item;
+            updateBottom(slot, item != null ? item.getItem() : null);
             return this;
         }
 
@@ -195,6 +220,16 @@ public interface InventoryContent {
          */
         private void update(int slot, ItemStack item) {
             inventory.setItem(slot, item);
+        }
+
+        /**
+         * 인벤토리의 바텀 슬롯을 업데이트합니다.
+         *
+         * @param slot 업데이트 할 슬롯
+         * @param item 업데이트 비포 {@link ItemStack}
+         */
+        private void updateBottom(int slot, ItemStack item) {
+            player.getOpenInventory().getBottomInventory().setItem(slot, item);
         }
     }
 

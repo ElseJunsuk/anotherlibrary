@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,9 +22,13 @@ import java.util.List;
 public class ItemBuilder {
 
     /**
-     * 빌더 클래스에서 싱글톤을 사용했습니다.
+     * 만들어져 있던 아이템을 수정할 수 있는 빌더를 개행합니다.
+     *
+     * @param item 수정할 아이템
+     * @return {@link Builder}
      */
-    private ItemBuilder() {
+    public static Builder editItem(ItemStack item) {
+        return new Builder(item);
     }
 
     /**
@@ -41,7 +46,7 @@ public class ItemBuilder {
      */
     public static final class Builder {
 
-        private static final ItemStack DEFAULT_ITEM = new ItemStack(Material.BARRIER);
+        private final ItemStack DEFAULT_ITEM = new ItemStack(Material.BARRIER);
 
         private final ItemStack item;
         private final ItemMeta meta;
@@ -53,6 +58,12 @@ public class ItemBuilder {
         private Builder() {
             this.item = DEFAULT_ITEM;
             this.meta = item.getItemMeta();
+        }
+
+        private Builder(ItemStack item) {
+            this.item = item;
+            this.meta = item.getItemMeta();
+            ;
         }
 
         /**
@@ -74,7 +85,7 @@ public class ItemBuilder {
          * @return {@link Builder}
          */
         public Builder setAmount(int amount) {
-            if (amount < 1) {
+            if (amount < 0) {
                 return null;
             }
             item.setAmount(amount);
@@ -94,6 +105,18 @@ public class ItemBuilder {
         }
 
         /**
+         * 아이템의 커스텀 이름을 설정합니다.
+         *
+         * @param name 설정할 아이템의 이름
+         * @return {@link Builder}
+         */
+        public Builder setDisplayName(Component name) {
+            Preconditions.checkNotNull(name, "[AnotherLibrary] 아이템의 이름을 지정해야 합니다.");
+            meta.displayName(name);
+            return this;
+        }
+
+        /**
          * 아이템에 로어(설명)을 추가합니다.
          *
          * @param lore {@link Component} 인자를 포함한 {@link List}
@@ -102,6 +125,21 @@ public class ItemBuilder {
         public Builder setLore(List<Component> lore) {
             Preconditions.checkNotNull(lore, "[AnotherLibrary] 아이템의 로어를 지정해야 합니다.");
             meta.lore(lore);
+            return this;
+        }
+
+        /**
+         * 아이템에 로어(설명)을 추가합니다.
+         *
+         * @param lore {@link Component} 인자를 포함한 {@link List}
+         * @return {@link Builder}
+         */
+        public Builder setLore(String... lore) {
+            Preconditions.checkNotNull(lore, "[AnotherLibrary] 아이템의 로어를 지정해야 합니다.");
+            List<Component> list = new ArrayList<>();
+            for (String key : lore)
+                list.add(StringUtil.format(key));
+            meta.lore(list);
             return this;
         }
 
@@ -139,6 +177,17 @@ public class ItemBuilder {
         public Builder setGlowing() {
             addEnchant(Enchantment.DURABILITY, 1);
             return addFlags(ItemFlag.HIDE_ENCHANTS);
+        }
+
+        /**
+         * 아이템에 모델 데이터를 적용합니다.
+         *
+         * @param value 모델 데이터
+         * @return {@link Builder}
+         */
+        public Builder setResourceData(int value) {
+            meta.setCustomModelData(value);
+            return this;
         }
 
         /**

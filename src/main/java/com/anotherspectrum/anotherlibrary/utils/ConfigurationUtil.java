@@ -5,11 +5,14 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
 import java.util.Locale;
+import java.util.Objects;
+import java.util.UUID;
 import java.util.function.Supplier;
 
 /**
@@ -70,9 +73,7 @@ public final class ConfigurationUtil implements Serializable {
      * @return 해당 클래스를 한 번 더 리턴하여 내부 메소드를 이용할 수 있음
      */
     public ConfigurationUtil setDefaultUserInformationToConfig(Player player) {
-        config.set("name", player.getName());
-        config.set("uuid", player.getUniqueId().toString());
-        return this;
+        return setDefaultUserInformationToConfig(player.getName(), player.getUniqueId());
     }
 
     /**
@@ -84,8 +85,12 @@ public final class ConfigurationUtil implements Serializable {
      * @return 해당 클래스를 한 번 더 리턴하여 내부 메소드를 이용할 수 있음
      */
     public ConfigurationUtil setDefaultUserInformationToConfig(OfflinePlayer offlinePlayer) {
-        config.set("name", offlinePlayer.getName());
-        config.set("uuid", offlinePlayer.getUniqueId().toString());
+        return setDefaultUserInformationToConfig(Objects.requireNonNull(offlinePlayer.getName()), offlinePlayer.getUniqueId());
+    }
+
+    public ConfigurationUtil setDefaultUserInformationToConfig(@NotNull String name, @NotNull UUID uuid) {
+        config.set("name", name);
+        config.set("uuid", uuid.toString());
         return this;
     }
 
