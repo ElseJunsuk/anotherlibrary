@@ -75,6 +75,7 @@ public class InventoryListeners implements Listener {
                             event.setCancelled(true);
                             clickableItem.get().run(event);
                             menuManager.bottomMenuClickAction(player, event);
+                            return;
                         }
                         if (menuManager.getActions().containsKey(ActionHandler.MENU_CLICK) && menuManager.getActions().get(ActionHandler.BOTTOM_MENU_CLICK))
                             menuManager.bottomMenuClickAction(player, event);
@@ -85,6 +86,7 @@ public class InventoryListeners implements Listener {
                             event.setCancelled(true);
                             clickableItem.ifPresent(item -> item.run(event));
                             menuManager.menuNormalClickAction(player, event);
+                            return;
                         }
                         if (menuManager.getActions().containsKey(ActionHandler.MENU_CLICK) && menuManager.getActions().get(ActionHandler.MENU_CLICK))
                             menuManager.menuNormalClickAction(player, event);
@@ -101,7 +103,6 @@ public class InventoryListeners implements Listener {
         if (menuManager != null) {
             if (menuManager.getActions().containsKey(ActionHandler.MENU_CLOSE) && menuManager.getActions().get(ActionHandler.MENU_CLOSE)) {
                 menuManager.menuCloseAction(player, event);
-                menuManager.getActions().clear();
             }
         }
     }

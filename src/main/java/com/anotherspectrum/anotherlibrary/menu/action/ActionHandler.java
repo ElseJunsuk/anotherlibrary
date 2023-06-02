@@ -1,8 +1,6 @@
 package com.anotherspectrum.anotherlibrary.menu.action;
 
 import lombok.Getter;
-import org.bukkit.event.inventory.InventoryEvent;
-import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 
 public interface ActionHandler<A> {
