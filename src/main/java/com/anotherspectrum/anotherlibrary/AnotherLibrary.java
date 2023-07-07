@@ -3,6 +3,7 @@ package com.anotherspectrum.anotherlibrary;
 import com.anotherspectrum.anotherlibrary.menu.listener.InventoryListeners;
 import com.google.common.base.Preconditions;
 import lombok.Getter;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,16 +16,13 @@ import org.jetbrains.annotations.NotNull;
  * this.anotherLibrary = new AnotherLibrary(JavaPlugin);
  * }</pre>
  *
- * @see #AnotherLibrary(JavaPlugin)
+ * @see #AnotherLibrary(Plugin)
  * @since 0.1.0 - UPDATE FOR 0.5.0-SNAPSHOT
  */
 public final class AnotherLibrary {
 
-    // 라이브러리가 활성화되어 있는가
-    private static boolean enabled;
-
     // JavaPlugin 클래스를 상속받는 메인 클래스
-    private static @Getter JavaPlugin plugin;
+    private final Plugin plugin;
 
     /**
      * 라이브러리의 소스를 사용하려면 반드시
@@ -32,27 +30,19 @@ public final class AnotherLibrary {
      *
      * @param plugin 메인 클래스
      */
-    public AnotherLibrary(@NotNull JavaPlugin plugin) {
+    public AnotherLibrary(@NotNull Plugin plugin) {
         Preconditions.checkNotNull(plugin);
-        enabled = true;
-        AnotherLibrary.plugin = plugin;
+        this.plugin = plugin;
 
         new InventoryListeners(plugin);
     }
 
     /**
-     * @return 라이브러리가 활성화되어 있는가
-     */
-    public static boolean isEnabled() {
-        return enabled;
-    }
-
-    /**
      *
-     * @return 라이브러리가 어느 프로젝트에 정상적으로 연결되어 있는가
+     * @return 라이브러리가 연결된 프로젝트
      */
-    public static boolean checkValid() {
-        return plugin != null;
+    public Plugin getPlugin() {
+        return plugin;
     }
 
 }

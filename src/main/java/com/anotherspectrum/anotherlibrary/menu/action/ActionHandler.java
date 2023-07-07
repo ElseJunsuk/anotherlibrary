@@ -3,6 +3,12 @@ package com.anotherspectrum.anotherlibrary.menu.action;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * 메뉴의 특정 행동으로 인하여 발생한 이벤트에 대해 정의하는 클래스입니다.
+ *
+ * @param <A> Menu Actions
+ * @since 0.5.0-SNAPSHOT
+ */
 public interface ActionHandler<A> {
 
     ActionHandler<MenuClickAction> MENU_CLICK = new DefaultActionHandlerImplement<>(MenuClickAction.class);

@@ -18,34 +18,40 @@ import java.util.*;
  * 해당 클래스를 사용하면 메뉴를 간편하게 제작할 수 있습니다.
  *
  * @author Else_JunSuk
- * @since 0.1.0 - UPDATE FOR 0.4.7
+ * @since 0.1.0 - UPDATE FOR 0.5.1
  */
 public abstract class MenuManager
         implements MenuClickAction, MenuCloseAction, MenuDragAction, MenuOpenAction, BottomMenuClickAction, Serializable {
 
-    private @Getter int rows;
-    private @Getter
-    final Component title;
+    @Getter
+    private int rows;
 
-//    private @Getter
-//    final Player player;
+    @Getter
+    private final Component title;
 
-    private @Getter Inventory inventory;
+    @Getter
+    private Inventory inventory;
 
-    private @Getter ClickableItem[] itemContents;
+    @Getter
+    private ClickableItem[] itemContents;
 
     private static final Map<Player, MenuManager> menuOpen = new HashMap<>();
+
     private static final Map<String, Set<UUID>> viewers = new HashMap<>();
-    private @Getter
-    final Map<ActionHandler<?>, Boolean> actions = new HashMap<>();
+
+    @Getter
+    private final Map<ActionHandler<?>, Boolean> actions = new HashMap<>();
 
     private final String viewerID;
-    private @Getter
-    final UUID uuid;
 
-    private @Getter InventoryContent inventoryContent;
+    @Getter
+    private final UUID uuid;
 
-    private @Getter InventoryType inventoryType;
+    @Getter
+    private InventoryContent inventoryContent;
+
+    @Getter
+    private InventoryType inventoryType;
 
     /**
      * 커스텀 인벤토리를 제작합니다.
@@ -117,6 +123,22 @@ public abstract class MenuManager
      */
     public <T> void applyMenuAction(ActionHandler<T> action) {
         this.actions.put(action, true);
+    }
+
+    /**
+     * 메뉴의 특정 Action(Event)을 추가하려면 해당 메소드를 사용해야 합니다.
+     * <pre>{@code
+     * applyMenuAction(ActionType.MENU_CLICK);
+     * }</pre>
+     * 위와 같이 사용할 수 있습니다.
+     * <p>해당 메소드는 여러개의 이벤트를 한꺼번에 추가합니다.</p>
+     *
+     * @param action {@link ActionHandler}... 액션 타입
+     * @param <T>    재네릭스 액션 타입
+     */
+    @SafeVarargs
+    public final <T> void applyMenuActions(ActionHandler<T>... action) {
+        Arrays.stream(action).distinct().forEach(v -> this.actions.put(v, true));
     }
 
     /**

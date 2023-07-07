@@ -11,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
@@ -24,7 +25,7 @@ import java.util.Optional;
  */
 public class InventoryListeners implements Listener {
 
-    public InventoryListeners(JavaPlugin plugin) {
+    public InventoryListeners(Plugin plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
 
         if (Bukkit.getServer().getOnlinePlayers().size() > 0)
