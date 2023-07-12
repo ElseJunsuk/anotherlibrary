@@ -9,7 +9,10 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.potion.PotionData;
+import org.bukkit.potion.PotionType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -324,6 +327,28 @@ public class ItemCreator {
         ItemStack item = editItem(targetItem, amount, name, lore, hideFlags, isGlowing);
         ItemMeta meta = item.getItemMeta();
         meta.setCustomModelData(modelData);
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    /**
+     * {@link Material#TIPPED_ARROW} 아이템에 포션 효과를 부여합니다.
+     *
+     * @param material   아이템 타입
+     * @param amount     아이텝 갯수
+     * @param name       아이템 이름
+     * @param lore       아이템 설명
+     * @param hideFlags  플래그 하이딩
+     * @param isGlowing  아이템 인첸팅 효과
+     * @param potionType 부여할 포션 타입
+     * @param modelData  모델 데이터
+     * @return {@link ItemStack}
+     */
+    public static ItemStack arrowItem(@NotNull Material material, int amount, Component name, List<Component> lore, boolean hideFlags, boolean isGlowing, PotionType potionType, int modelData) {
+        ItemStack item = create(material, amount, name, lore, hideFlags, isGlowing);
+        PotionMeta meta = (PotionMeta) item.getItemMeta();
+        meta.setCustomModelData(modelData);
+        meta.setBasePotionData(new PotionData(potionType));
         item.setItemMeta(meta);
         return item;
     }
